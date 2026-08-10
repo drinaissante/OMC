@@ -140,7 +140,7 @@ export default function LicensesPage() {
         </div>
         <div className="flex items-center gap-2">
           <Select value={filters.status ?? "all"} onValueChange={(v) => { if (v) updateFilter("status", v === "all" ? undefined : v) }}>
-            <SelectTrigger className="w-[140px]">
+            <SelectTrigger className="w-35">
               <SelectValue placeholder="All Statuses" />
             </SelectTrigger>
             <SelectContent>
@@ -152,7 +152,7 @@ export default function LicensesPage() {
             </SelectContent>
           </Select>
           <Select value={filters.plugin_id ?? "all"} onValueChange={(v) => { if (v) updateFilter("plugin_id", v === "all" ? undefined : v) }}>
-            <SelectTrigger className="w-[160px]">
+            <SelectTrigger className="w-40">
               <SelectValue placeholder="All Plugins" />
             </SelectTrigger>
             <SelectContent>

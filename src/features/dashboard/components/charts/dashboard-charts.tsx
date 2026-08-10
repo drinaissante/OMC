@@ -85,6 +85,42 @@ export function PluginInstallationsChart({ data }: PluginChartProps) {
   )
 }
 
+interface GeographicDistributionProps {
+  data: Array<{ name: string; count: number }>
+}
+
+export function GeographicDistributionChart({ data }: GeographicDistributionProps) {
+  return (
+    <ChartCard title="Geographic Distribution">
+      <ResponsiveContainer width="100%" height={300}>
+        <PieChart>
+          <Pie
+            data={data}
+            cx="50%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={100}
+            paddingAngle={4}
+            dataKey="count"
+            nameKey="name"
+          >
+            {data.map((_, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            contentStyle={{
+              backgroundColor: "hsl(var(--card))",
+              border: "1px solid hsl(var(--border))",
+              borderRadius: "8px",
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </ChartCard>
+  )
+}
+
 interface ValidationRateProps {
   successRate: number
   failureRate: number

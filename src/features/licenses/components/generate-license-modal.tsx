@@ -100,7 +100,7 @@ export function GenerateLicenseModal({ open, onOpenChange }: GenerateLicenseModa
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[520px]">
+      <DialogContent className="sm:max-w-130">
         {generatedKey ? (
           <>
             <DialogHeader>

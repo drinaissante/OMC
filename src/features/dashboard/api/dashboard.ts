@@ -62,3 +62,18 @@ export async function fetchPluginInstallations() {
 
   return Object.entries(counts).map(([name, count]) => ({ name, count }))
 }
+
+export async function fetchGeographicDistribution() {
+  const { data } = await supabase
+    .from("deployments")
+    .select("country")
+    .not("country", "is", null)
+
+  const counts: Record<string, number> = {}
+  for (const d of data ?? []) counts[d.country!] = (counts[d.country!] ?? 0) + 1
+
+  return Object.entries(counts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10)
+    .map(([name, count]) => ({ name, count }))
+}

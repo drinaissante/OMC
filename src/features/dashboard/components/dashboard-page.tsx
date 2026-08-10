@@ -1,6 +1,6 @@
-import { useDashboardStats, useDailyValidations, usePluginInstallations } from "../hooks/use-dashboard-stats"
+import { useDashboardStats, useDailyValidations, usePluginInstallations, useGeographicDistribution } from "../hooks/use-dashboard-stats"
 import { KpiCards } from "./kpi-cards"
-import { ValidationsChart, PluginInstallationsChart, ValidationRateChart } from "./charts/dashboard-charts"
+import { ValidationsChart, PluginInstallationsChart, ValidationRateChart, GeographicDistributionChart } from "./charts/dashboard-charts"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
@@ -8,6 +8,7 @@ export default function DashboardPage() {
   const { data: stats, isLoading: statsLoading } = useDashboardStats()
   const { data: validations, isLoading: validationsLoading } = useDailyValidations(30)
   const { data: plugins, isLoading: pluginsLoading } = usePluginInstallations()
+  const { data: geo, isLoading: geoLoading } = useGeographicDistribution()
 
   const totalValidations = (validations ?? []).reduce((sum, d) => sum + d.success + d.failure, 0)
   const totalSuccess = (validations ?? []).reduce((sum, d) => sum + d.success, 0)
@@ -48,6 +49,21 @@ export default function DashboardPage() {
           </Card>
         ) : (
           <PluginInstallationsChart data={plugins ?? []} />
+        )}
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        {geoLoading ? (
+          <Card>
+            <CardHeader>
+              <Skeleton className="h-5 w-40" />
+            </CardHeader>
+            <CardContent>
+              <Skeleton className="h-[300px] w-full" />
+            </CardContent>
+          </Card>
+        ) : (
+          <GeographicDistributionChart data={geo ?? []} />
         )}
       </div>
 
