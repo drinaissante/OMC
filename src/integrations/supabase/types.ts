@@ -88,7 +88,7 @@ export interface Database {
           license_key: string
           plugin_id: string
           customer_name: string
-          customer_email: string
+          customer_email: string | null
           license_type: "lifetime" | "subscription" | "trial"
           status: "active" | "revoked" | "expired" | "pending"
           expiration_date: string | null
@@ -106,7 +106,7 @@ export interface Database {
           license_key: string
           plugin_id: string
           customer_name: string
-          customer_email: string
+          customer_email: string | null
           license_type: "lifetime" | "subscription" | "trial"
           status?: "active" | "revoked" | "expired" | "pending"
           expiration_date?: string | null
@@ -124,7 +124,7 @@ export interface Database {
           license_key?: string
           plugin_id?: string
           customer_name?: string
-          customer_email?: string
+          customer_email?: string | null
           license_type?: "lifetime" | "subscription" | "trial"
           status?: "active" | "revoked" | "expired" | "pending"
           expiration_date?: string | null

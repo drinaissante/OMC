@@ -129,7 +129,7 @@ export default function UsersPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Users</h1>
           <p className="text-muted-foreground">Manage administrator accounts</p>
@@ -157,7 +157,9 @@ export default function UsersPage() {
               <div className="space-y-2">
                 <Label>Role</Label>
                 <Select value={role} onValueChange={(v) => { if (v) setRole(v as Role) }}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectTrigger><SelectValue>
+                    {(value) => value === "administrator" ? "Administrator" : value === "developer" ? "Developer" : ""}
+                  </SelectValue></SelectTrigger>
                   <SelectContent>
                     <SelectItem value="administrator">Administrator</SelectItem>
                     <SelectItem value="developer">Developer</SelectItem>

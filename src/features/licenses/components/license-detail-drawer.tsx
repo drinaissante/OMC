@@ -87,7 +87,7 @@ export function LicenseDetailDrawer({ licenseId, open, onOpenChange }: LicenseDe
                 <InfoRow label="License Key" value={license.license_key} mono />
                 <InfoRow label="Plugin" value={license.plugins?.name ?? "Unknown"} />
                 <InfoRow label="Customer" value={license.customer_name} />
-                <InfoRow label="Email" value={license.customer_email} />
+                <InfoRow label="Email" value={license.customer_email ?? "—"} />
                 <InfoRow label="Status" value={license.status} />
                 <InfoRow label="Created" value={new Date(license.created_at).toLocaleString()} />
                 <InfoRow label="Expiration" value={license.license_type === "lifetime" ? "Never" : license.expiration_date ? new Date(license.expiration_date).toLocaleDateString() : "N/A"} />

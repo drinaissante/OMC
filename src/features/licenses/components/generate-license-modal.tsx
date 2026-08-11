@@ -67,7 +67,7 @@ export function GenerateLicenseModal({ open, onOpenChange }: GenerateLicenseModa
         license_key: key,
         plugin_id: values.plugin_id,
         customer_name: values.customer_name,
-        customer_email: values.customer_email,
+        customer_email: values.customer_email || null,
         license_type: values.license_type,
         expiration_date: values.license_type === "lifetime" ? null : values.expiration_date || null,
         max_validations: values.max_validations,
@@ -128,7 +128,9 @@ export function GenerateLicenseModal({ open, onOpenChange }: GenerateLicenseModa
                 <Label htmlFor="plugin_id">Plugin</Label>
                 <Select value={form.watch("plugin_id")} onValueChange={(v) => { if (v) form.setValue("plugin_id", v) }}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a plugin" />
+                    <SelectValue>
+                      {(value) => plugins?.find((p) => p.id === value)?.name ?? "Select a plugin"}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {plugins?.map((p) => (
@@ -140,7 +142,7 @@ export function GenerateLicenseModal({ open, onOpenChange }: GenerateLicenseModa
                   <p className="text-xs text-destructive">{form.formState.errors.plugin_id.message}</p>
                 )}
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="customer_name">Customer Name</Label>
                   <Input id="customer_name" {...form.register("customer_name")} placeholder="John Doe" />
@@ -156,12 +158,17 @@ export function GenerateLicenseModal({ open, onOpenChange }: GenerateLicenseModa
                   )}
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label>License Type</Label>
                   <Select value={form.watch("license_type")} onValueChange={(v) => { if (v) form.setValue("license_type", v as "lifetime" | "subscription" | "trial") }}>
                     <SelectTrigger>
-                      <SelectValue />
+                      <SelectValue>
+                        {(value) => {
+                          const labels: Record<string, string> = { lifetime: "Lifetime", subscription: "Subscription", trial: "Trial" }
+                          return labels[String(value)] ?? "Select license type"
+                        }}
+                      </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="lifetime">Lifetime</SelectItem>
@@ -177,7 +184,7 @@ export function GenerateLicenseModal({ open, onOpenChange }: GenerateLicenseModa
                   </div>
                 )}
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="allowed_deployments">Allowed Deployments</Label>
                   <Input id="allowed_deployments" type="number" min={1} {...form.register("allowed_deployments", { valueAsNumber: true })} />

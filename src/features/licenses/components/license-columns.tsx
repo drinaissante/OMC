@@ -44,7 +44,7 @@ export function getLicenseColumns({ onView, onRevoke, onDelete }: LicenseColumns
       cell: ({ row }) => (
         <div>
           <div className="text-sm font-medium">{row.original.customer_name}</div>
-          <div className="text-xs text-muted-foreground">{row.original.customer_email}</div>
+          <div className="text-xs text-muted-foreground">{row.original.customer_email ?? "—"}</div>
         </div>
       ),
     },

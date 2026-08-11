@@ -3,7 +3,7 @@ import { z } from "zod"
 export const generateLicenseSchema = z.object({
   plugin_id: z.string().min(1, "Plugin is required"),
   customer_name: z.string().min(2, "Customer name is required"),
-  customer_email: z.string().email("Invalid email address"),
+  customer_email: z.string().email("Invalid email address").optional().or(z.literal("")),
   license_type: z.enum(["lifetime", "subscription", "trial"]),
   expiration_date: z.string().optional(),
   max_validations: z.number().min(-1),

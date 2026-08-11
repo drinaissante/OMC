@@ -133,15 +133,20 @@ export default function LicensesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Licenses</h1>
           <p className="text-muted-foreground">Manage your plugin licenses</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Select value={filters.status ?? "all"} onValueChange={(v) => { if (v) updateFilter("status", v === "all" ? undefined : v) }}>
             <SelectTrigger className="w-35">
-              <SelectValue placeholder="All Statuses" />
+              <SelectValue>
+                {(value) => {
+                  const labels: Record<string, string> = { all: "All Statuses", active: "Active", revoked: "Revoked", expired: "Expired", pending: "Pending" }
+                  return labels[String(value)] ?? "All Statuses"
+                }}
+              </SelectValue>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Statuses</SelectItem>
@@ -153,7 +158,9 @@ export default function LicensesPage() {
           </Select>
           <Select value={filters.plugin_id ?? "all"} onValueChange={(v) => { if (v) updateFilter("plugin_id", v === "all" ? undefined : v) }}>
             <SelectTrigger className="w-40">
-              <SelectValue placeholder="All Plugins" />
+              <SelectValue>
+                {(value) => (value === "all" ? "All Plugins" : plugins?.find((p) => p.id === value)?.name ?? "All Plugins")}
+              </SelectValue>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Plugins</SelectItem>
@@ -163,12 +170,12 @@ export default function LicensesPage() {
             </SelectContent>
           </Select>
           <Button variant="outline" size="sm" onClick={() => handleExport("csv")}>
-            <Download className="mr-2 h-4 w-4" />
-            CSV
+            <Download className="h-4 w-4" />
+            <span className="ml-2 hidden sm:inline">CSV</span>
           </Button>
           <Button variant="outline" size="sm" onClick={() => handleExport("json")}>
-            <Download className="mr-2 h-4 w-4" />
-            JSON
+            <Download className="h-4 w-4" />
+            <span className="ml-2 hidden sm:inline">JSON</span>
           </Button>
           <Button onClick={() => setGenerateOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />

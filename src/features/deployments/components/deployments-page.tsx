@@ -100,14 +100,21 @@ export default function DeploymentsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Deployments</h1>
           <p className="text-muted-foreground">Monitor server and proxy deployments</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Select value={filters.status ?? "all"} onValueChange={(v) => { if (v) setFilters((prev) => ({ ...prev, status: v === "all" ? undefined : v })) }}>
-            <SelectTrigger className="w-[140px]"><SelectValue placeholder="All Statuses" /></SelectTrigger>
+            <SelectTrigger className="w-[140px]">
+              <SelectValue>
+                {(value) => {
+                  const labels: Record<string, string> = { all: "All Statuses", online: "Online", offline: "Offline", suspended: "Suspended", blacklisted: "Blacklisted" }
+                  return labels[String(value)] ?? "All Statuses"
+                }}
+              </SelectValue>
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Statuses</SelectItem>
               <SelectItem value="online">Online</SelectItem>
@@ -117,7 +124,14 @@ export default function DeploymentsPage() {
             </SelectContent>
           </Select>
           <Select value={filters.deployment_type ?? "all"} onValueChange={(v) => { if (v) setFilters((prev) => ({ ...prev, deployment_type: v === "all" ? undefined : v })) }}>
-            <SelectTrigger className="w-[140px]"><SelectValue placeholder="All Types" /></SelectTrigger>
+            <SelectTrigger className="w-[140px]">
+              <SelectValue>
+                {(value) => {
+                  const labels: Record<string, string> = { all: "All Types", standalone: "Standalone", proxy: "Proxy" }
+                  return labels[String(value)] ?? "All Types"
+                }}
+              </SelectValue>
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Types</SelectItem>
               <SelectItem value="standalone">Standalone</SelectItem>
