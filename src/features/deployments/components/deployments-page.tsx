@@ -53,7 +53,7 @@ export default function DeploymentsPage() {
     {
       accessorFn: (row) => row.licenses?.license_key ?? "",
       id: "license_key", header: "License",
-      cell: ({ row }) => <span className="font-mono text-xs">{row.original.licenses?.license_key?.slice(0, 20)}...</span>,
+      cell: ({ row }) => <span className="font-mono text-xs">{row.original.licenses?.license_key ? `${row.original.licenses.license_key.slice(0, 20)}...` : "Unlinked"}</span>,
     },
     {
       accessorKey: "status", header: "Status",

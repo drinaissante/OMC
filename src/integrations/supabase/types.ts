@@ -150,7 +150,7 @@ export interface Database {
         Row: {
           id: string
           display_id: number
-          license_id: string
+          license_id: string | null
           deployment_type: "standalone" | "proxy"
           status: "online" | "offline" | "suspended" | "blacklisted"
           public_ip: string | null
@@ -172,7 +172,7 @@ export interface Database {
         Insert: {
           id?: string
           display_id?: never
-          license_id: string
+          license_id?: string | null
           deployment_type: "standalone" | "proxy"
           status?: "online" | "offline" | "suspended" | "blacklisted"
           public_ip?: string | null
@@ -194,7 +194,7 @@ export interface Database {
         Update: {
           id?: string
           display_id?: never
-          license_id?: string
+          license_id?: string | null
           deployment_type?: "standalone" | "proxy"
           status?: "online" | "offline" | "suspended" | "blacklisted"
           public_ip?: string | null
@@ -277,7 +277,7 @@ export interface Database {
         Row: {
           id: string
           deployment_id: string
-          license_id: string
+          license_id: string | null
           status: "success" | "failure"
           failure_reason: string | null
           ip_address: string | null
@@ -286,7 +286,7 @@ export interface Database {
         Insert: {
           id?: string
           deployment_id: string
-          license_id: string
+          license_id?: string | null
           status: "success" | "failure"
           failure_reason?: string | null
           ip_address?: string | null
@@ -295,7 +295,7 @@ export interface Database {
         Update: {
           id?: string
           deployment_id?: string
-          license_id?: string
+          license_id?: string | null
           status?: "success" | "failure"
           failure_reason?: string | null
           ip_address?: string | null

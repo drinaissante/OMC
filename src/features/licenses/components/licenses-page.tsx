@@ -62,6 +62,20 @@ export default function LicensesPage() {
     },
   })
 
+  const { data: deploymentCount } = useQuery({
+    queryKey: ["deployments", "count", deleteTarget?.id],
+    queryFn: async () => {
+      if (!deleteTarget) return 0
+      const { count, error } = await supabase
+        .from("deployments")
+        .select("id", { count: "exact", head: true })
+        .eq("license_id", deleteTarget.id)
+      if (error) throw error
+      return count ?? 0
+    },
+    enabled: !!deleteTarget,
+  })
+
   const handleView = useCallback((license: LicenseWithPlugin) => {
     setDetailId(license.id)
     setDetailOpen(true)
@@ -217,6 +231,11 @@ export default function LicensesPage() {
             <AlertDialogTitle>Delete License</AlertDialogTitle>
             <AlertDialogDescription>
               Are you sure you want to permanently delete the license for {deleteTarget?.customer_name}? This cannot be undone.
+              {deploymentCount !== undefined && deploymentCount > 0 && (
+                <span className="mt-2 block text-sm">
+                  {deploymentCount} linked deployment(s) will be kept, but their license link will be cleared.
+                </span>
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
